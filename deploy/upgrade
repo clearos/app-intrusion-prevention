@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Add sudoers entries
+#--------------------
+
+/usr/sbin/addsudo /usr/bin/snortsam-state app-intrusion-prevention-core
+
+# Implant Snortsam hook
+#----------------------
+
+if [ -e /etc/snort.conf ]; then
+    CHECK=`grep "^output[[:space:]]*alert_fwsam:" /etc/snort.conf`
+    if [ -z "$CHECK" ]; then 
+        logger -p local6.notice -t installer "app-intrusion-prevention-core - adding hook to intrusion detection system"
+        sed -i -e "s/^output[[:space:]]*\(.*\)/output \1\n\n\
+# snortsam - intrusion prevention\n\
+output alert_fwsam: 127.0.0.1/" /etc/snort.conf
+
+        /sbin/service snort condrestart >/dev/null 2>&1
+    fi
+fi
+
+exit 0

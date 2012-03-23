@@ -1,5 +1,18 @@
 #!/bin/sh
 
+TIMESTAMP=`date "+%b-%d-%Y-%T"`
+
+# Set default configuration
+#--------------------------
+
+logger -p local6.notice -t installer "app-intrusion-prevention-core - setting default configuration"
+
+if [ -e /etc/snortsam.conf ]; then
+    mv /etc/snortsam.conf /var/clearos/intrusion_prevention/backup/snortsam.conf.$TIMESTAMP
+fi
+
+cp /usr/clearos/apps/intrusion_prevention/deploy/snortsam.conf /etc/snortsam.conf
+
 # Set default start/boot
 #-----------------------
 

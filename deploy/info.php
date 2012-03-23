@@ -46,3 +46,9 @@ $app['core_requires'] = array(
 $app['core_file_manifest'] = array(
     'snortsam.php'=> array('target' => '/var/clearos/base/daemon/snortsam.php'),
 );
+
+$app['core_directory_manifest'] = array(
+    '/var/clearos/intrusion_prevention' => array(),
+    '/var/clearos/intrusion_prevention/backup' => array(),
+);
+

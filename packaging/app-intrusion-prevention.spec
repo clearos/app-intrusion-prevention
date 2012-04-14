@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 1.0.10
+Version: 1.1.0
 Release: 1%{dist}
 Summary: Intrusion Prevention
 License: GPLv3
@@ -17,7 +17,7 @@ Requires: app-network
 Intrusion Prevention actively monitors network traffic and blocks unwanted traffic before it can harm your network.
 
 %package core
-Summary: Intrusion Prevention - APIs and install
+Summary: Intrusion Prevention - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core

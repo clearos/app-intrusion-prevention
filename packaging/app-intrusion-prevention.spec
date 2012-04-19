@@ -14,7 +14,7 @@ Requires: app-intrusion-detection
 Requires: app-network
 
 %description
-Intrusion Prevention actively monitors network traffic and blocks unwanted traffic before it can harm your network.
+The Intrusion Prevention app actively monitors network traffic and blocks unwanted traffic before it can harm your network.
 
 %package core
 Summary: Intrusion Prevention - Core
@@ -26,7 +26,7 @@ Requires: app-intrusion-detection-core
 Requires: snort >= 2.9.0.4
 
 %description core
-Intrusion Prevention actively monitors network traffic and blocks unwanted traffic before it can harm your network.
+The Intrusion Prevention app actively monitors network traffic and blocks unwanted traffic before it can harm your network.
 
 This package provides the core API and libraries.
 

@@ -59,11 +59,13 @@ clearos_load_language('network');
 use \clearos\apps\base\Daemon as Daemon;
 use \clearos\apps\base\File as File;
 use \clearos\apps\base\Shell as Shell;
+use \clearos\apps\firewall\Firewall as Firewall;
 use \clearos\apps\network\Network_Utils as Network_Utils;
 
 clearos_load_library('base/Daemon');
 clearos_load_library('base/File');
 clearos_load_library('base/Shell');
+clearos_load_library('firewall/Firewall');
 clearos_load_library('network/Network_Utils');
 
 // Exceptions
@@ -145,6 +147,9 @@ class SnortSam extends Daemon
         }
 
         $file->add_lines("dontblock $ip\n");
+
+        $firewall = new Firewall();
+        $firewall->restart();
     }
 
     /**
@@ -163,6 +168,9 @@ class SnortSam extends Daemon
 
         $shell = new Shell();
         $shell->execute(self::COMMAND_STATE, "-D $crc", TRUE);
+
+        $firewall = new Firewall();
+        $firewall->restart();
     }
 
     /**
@@ -187,6 +195,9 @@ class SnortSam extends Daemon
                 return;
             }
         }
+
+        $firewall = new Firewall();
+        $firewall->restart();
     }
 
     /**
@@ -306,6 +317,9 @@ class SnortSam extends Daemon
 
         $shell = new Shell();
         $shell->execute(self::COMMAND_STATE, "-D all", TRUE);
+
+        $firewall = new Firewall();
+        $firewall->restart();
     }
 
     ///////////////////////////////////////////////////////////////////////////////

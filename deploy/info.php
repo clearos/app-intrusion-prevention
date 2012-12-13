@@ -52,3 +52,10 @@ $app['core_directory_manifest'] = array(
     '/var/clearos/intrusion_prevention/backup' => array(),
 );
 
+$app['delete_dependency'] = array(
+    'app-intrusion-prevention-core',
+    'app-intrusion-detection',
+    'app-intrusion-detection-core',
+    'snort',
+    'snort-gpl-rules'
+);

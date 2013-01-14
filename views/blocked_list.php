@@ -97,9 +97,12 @@ foreach ($blocked as $id => $details) {
 // Summary table
 ///////////////////////////////////////////////////////////////////////////////
 
+$options['default_rows'] = 50;
+
 echo summary_table(
     lang('intrusion_prevention_blocked_list'),
     $anchors,
     $headers,
-    $items
+    $items,
+    $options
 );

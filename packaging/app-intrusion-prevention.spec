@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 1.2.0
+Version: 1.4.15
 Release: 1%{dist}
 Summary: Intrusion Prevention
 License: GPLv3

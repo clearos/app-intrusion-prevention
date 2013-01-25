@@ -153,7 +153,7 @@ class SnortSam extends Daemon
     }
 
     /**
-     * Delete a blocked host.
+     * Deletes a blocked host by CRC.
      *
      * @param string $crc CRC of blocked host to delete (can also be 'all')
      *
@@ -174,7 +174,7 @@ class SnortSam extends Daemon
     }
 
     /**
-     * Delete a blocked host.
+     * Deletes a blocked host by IP.
      *
      * @param string $ip IP address to unblock
      *
@@ -355,13 +355,14 @@ class SnortSam extends Daemon
         clearos_profile(__METHOD__, __LINE__);
 
         if (! preg_match('/^[a-zA-Z0-9]+$/', $crc))
-            return lang('intrusion_prevention_crc_invalid');
+            return lang('intrusion_prevention_checksum_invalid');
     }
 
     /**
-     * Validates IP address.
+     * Validates whitelist IP address.
      *
-     * @param string $ip IP address
+     * @param string  $ip           IP address
+     * @param boolean $check_exists check existence flag
      *
      * @return string error message if IP address is invalid
      */

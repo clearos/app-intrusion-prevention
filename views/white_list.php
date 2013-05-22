@@ -3,9 +3,9 @@
 /**
  * Intrusion prevention white list view.
  *
- * @category   ClearOS
- * @package    Intrusion_Prevention
- * @subpackage Views
+ * @category   apps
+ * @package    intrusion-prevention
+ * @subpackage views
  * @author     ClearFoundation <developer@clearfoundation.com>
  * @copyright  2011 ClearFoundation
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License version 3 or later

@@ -7,7 +7,7 @@
  * @package    intrusion-prevention
  * @subpackage libraries
  * @author     ClearFoundation <developer@clearfoundation.com>
- * @copyright  2005-2011 ClearFoundation
+ * @copyright  2005-2013 ClearFoundation
  * @license    http://www.gnu.org/copyleft/lgpl.html GNU Lesser General Public License version 3 or later
  * @link       http://www.clearfoundation.com/docs/developer/apps/intrusion_prevention/
  */
@@ -60,20 +60,26 @@ use \clearos\apps\base\Daemon as Daemon;
 use \clearos\apps\base\File as File;
 use \clearos\apps\base\Shell as Shell;
 use \clearos\apps\firewall\Firewall as Firewall;
+use \clearos\apps\network\Iface_Manager as Iface_Manager;
 use \clearos\apps\network\Network_Utils as Network_Utils;
 
 clearos_load_library('base/Daemon');
 clearos_load_library('base/File');
 clearos_load_library('base/Shell');
 clearos_load_library('firewall/Firewall');
+clearos_load_library('network/Iface_Manager');
 clearos_load_library('network/Network_Utils');
 
 // Exceptions
 //-----------
 
 use \Exception as Exception;
+use \clearos\apps\base\File_No_Match_Exception as File_No_Match_Exception;
+use \clearos\apps\base\File_Not_Found_Exception as File_Not_Found_Exception;
 use \clearos\apps\base\Validation_Exception as Validation_Exception;
 
+clearos_load_library('base/File_No_Match_Exception');
+clearos_load_library('base/File_Not_Found_Exception');
 clearos_load_library('base/Validation_Exception');
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,7 +93,7 @@ clearos_load_library('base/Validation_Exception');
  * @package    intrusion-prevention
  * @subpackage libraries
  * @author     ClearFoundation <developer@clearfoundation.com>
- * @copyright  2005-2011 ClearFoundation
+ * @copyright  2005-2013 ClearFoundation
  * @license    http://www.gnu.org/copyleft/lgpl.html GNU Lesser General Public License version 3 or later
  * @link       http://www.clearfoundation.com/docs/developer/apps/intrusion_prevention/
  */
@@ -98,6 +104,8 @@ class SnortSam extends Daemon
     // C O N S T A N T S
     ///////////////////////////////////////////////////////////////////////////////
 
+    const FILE_APP_CONFIG = '/etc/clearos/intrusion_prevention.conf';
+    const FILE_CONFIG = '/etc/snortsam.conf';
     const FILE_STATE = '/var/db/snortsam.state';
     const FILE_WHITELIST = '/etc/snortsam.d/webconfig-whitelist.conf';
     const COMMAND_STATE = '/usr/bin/snortsam-state';
@@ -150,6 +158,74 @@ class SnortSam extends Daemon
 
         $firewall = new Firewall();
         $firewall->restart();
+    }
+
+    /**
+     * Automatically configures parts of SnortSam.
+     *
+     * Some of the SnortSam configuration depends on the network configuration.
+     * For example, adding a second WAN interface means snortsam needs to 
+     * adjust its internal network settings.
+     *
+     * @return void
+     * @throws Engine_Exception, Validation_Exception
+     */
+
+    public function auto_configure()
+    {
+        clearos_profile(__METHOD__, __LINE__);
+
+        // Check auto-configure state
+        //---------------------------
+
+        $app_config = new File(self::FILE_APP_CONFIG);
+
+        try {
+            $value = $app_config->lookup_value("/^auto_configure\s*=\s*/i");
+            if (preg_match('/no/i', $value))
+                return;
+        } catch (File_Not_Found_Exception $e) {
+        } catch (File_No_Match_Exception $e) {
+        }
+
+        // Implant WAN interface configuration
+        //------------------------------------
+
+        $iface_manager = new Iface_Manager();
+        $ifaces = $iface_manager->get_external_interfaces();
+
+        $file = new File(self::FILE_CONFIG);
+        $lines = $file->get_contents_as_array();
+
+        $new_lines = array();
+        $implanted = FALSE;
+
+        foreach ($lines as $line) {
+            if (preg_match('/^iptables*/', $line)) {
+                if (!$implanted) {
+                    foreach ($ifaces as $iface)
+                        $new_lines[] = "iptables $iface syslog.info";
+
+                    $implanted = TRUE;
+                }
+            } else {
+                $new_lines[] =  $line;
+            }
+        }
+
+        // Bail if nothing has changed
+        if ($new_lines === $lines)
+            return;
+
+        if ($file->exists())
+            $file->delete();
+
+        $file->create('root', 'root', '0644');
+        $file->dump_contents_from_array($new_lines);
+
+        $this->reset();
+
+        clearos_log('intrusion-prevention', lang('base_network_configuration_updated'));
     }
 
     /**

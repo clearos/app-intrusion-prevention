@@ -38,13 +38,26 @@ $app['requires'] = array(
 );
 
 $app['core_requires'] = array(
-    'app-network-core',
+    'app-network-core >= 1:1.4.70',
     'app-intrusion-detection-core',
     'snort >= 2.9.0.4',
 );
 
 $app['core_file_manifest'] = array(
     'snortsam.php'=> array('target' => '/var/clearos/base/daemon/snortsam.php'),
+    'intrusion_prevention.conf'=> array(
+        'target' => '/etc/clearos/intrusion_prevention.conf',
+        'config' => TRUE,
+        'config_params' => 'noreplace',
+    ),
+    'network-configuration-event'=> array(
+        'target' => '/var/clearos/events/network_configuration/intrusion_prevention',
+        'mode' => '0755'
+    ),
+    '10-intrusion-prevention'=> array(
+        'target' => '/etc/clearos/firewall.d/10-intrusion-prevention',
+        'mode' => '0755'
+    ),
 );
 
 $app['core_directory_manifest'] = array(

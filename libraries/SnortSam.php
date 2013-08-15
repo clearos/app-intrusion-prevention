@@ -193,6 +193,7 @@ class SnortSam extends Daemon
 
         $iface_manager = new Iface_Manager();
         $ifaces = $iface_manager->get_external_interfaces();
+        krsort($ifaces);
 
         $file = new File(self::FILE_CONFIG);
         $lines = $file->get_contents_as_array();

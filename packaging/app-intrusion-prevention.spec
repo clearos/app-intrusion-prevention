@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 1.5.0
+Version: 1.6.5
 Release: 1%{dist}
 Summary: Intrusion Prevention
 License: GPLv3
@@ -81,7 +81,6 @@ exit 0
 %files core
 %defattr(-,root,root)
 %exclude /usr/clearos/apps/intrusion_prevention/packaging
-%exclude /usr/clearos/apps/intrusion_prevention/tests
 %dir /usr/clearos/apps/intrusion_prevention
 %dir /var/clearos/intrusion_prevention
 %dir /var/clearos/intrusion_prevention/backup

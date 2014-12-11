@@ -17,7 +17,7 @@ cp /usr/clearos/apps/intrusion_prevention/deploy/snortsam.conf /etc/snortsam.con
 #-----------------------
 
 logger -p local6.notice -t installer "app-intrusion-prevention-core - enabling intrusion prevention server"
-chkconfig snortsam on
+chkconfig snortsam on >/dev/null 2>&1
 
 logger -p local6.notice -t installer "app-intrusion-prevention-core - starting intrusion prevention server"
-service snortsam start
+service snortsam start >/dev/null 2>&1

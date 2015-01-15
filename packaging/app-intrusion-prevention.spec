@@ -1,9 +1,9 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 2.0.5
+Version: 2.0.14
 Release: 1%{dist}
-Summary: Intrusion Prevention
+Summary: Intrusion Prevention System
 License: GPLv3
 Group: ClearOS/Apps
 Source: %{name}-%{version}.tar.gz
@@ -14,10 +14,10 @@ Requires: app-intrusion-detection
 Requires: app-network
 
 %description
-The Intrusion Prevention app actively monitors network traffic and blocks unwanted traffic before it can harm your network.
+The Intrusion Prevention System actively monitors network traffic and blocks unwanted traffic before it can harm your network.
 
 %package core
-Summary: Intrusion Prevention - Core
+Summary: Intrusion Prevention System - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
@@ -26,7 +26,7 @@ Requires: app-intrusion-detection-core
 Requires: snort >= 2.9.0.4
 
 %description core
-The Intrusion Prevention app actively monitors network traffic and blocks unwanted traffic before it can harm your network.
+The Intrusion Prevention System actively monitors network traffic and blocks unwanted traffic before it can harm your network.
 
 This package provides the core API and libraries.
 

@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'intrusion_prevention';
-$app['version'] = '2.0.18';
+$app['version'] = '2.0.21';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -67,8 +67,4 @@ $app['core_directory_manifest'] = array(
 
 $app['delete_dependency'] = array(
     'app-intrusion-prevention-core',
-    'app-intrusion-detection',
-    'app-intrusion-detection-core',
-    'snort',
-    'snort-gpl-rules'
 );

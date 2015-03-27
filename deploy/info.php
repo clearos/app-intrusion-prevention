@@ -58,6 +58,12 @@ $app['core_file_manifest'] = array(
         'target' => '/etc/clearos/firewall.d/10-intrusion-prevention',
         'mode' => '0755'
     ),
+    'webconfig-whitelist.conf' => array(
+        'target' => '/etc/snortsam.d/webconfig-whitelist.conf',
+        'mode' => '0644',
+        'config' => TRUE,
+        'config_params' => 'noreplace',
+    ),
 );
 
 $app['core_directory_manifest'] = array(

@@ -44,6 +44,7 @@ install -D -m 0755 packaging/10-intrusion-prevention %{buildroot}/etc/clearos/fi
 install -D -m 0644 packaging/intrusion_prevention.conf %{buildroot}/etc/clearos/intrusion_prevention.conf
 install -D -m 0755 packaging/network-configuration-event %{buildroot}/var/clearos/events/network_configuration/intrusion_prevention
 install -D -m 0644 packaging/snortsam.php %{buildroot}/var/clearos/base/daemon/snortsam.php
+install -D -m 0644 packaging/webconfig-whitelist.conf %{buildroot}/etc/snortsam.d/webconfig-whitelist.conf
 
 %post
 logger -p local6.notice -t installer 'app-intrusion-prevention - installing'
@@ -91,3 +92,4 @@ exit 0
 %config(noreplace) /etc/clearos/intrusion_prevention.conf
 /var/clearos/events/network_configuration/intrusion_prevention
 /var/clearos/base/daemon/snortsam.php
+%config(noreplace) /etc/snortsam.d/webconfig-whitelist.conf

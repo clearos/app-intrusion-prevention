@@ -7,3 +7,5 @@ killall -q snortsam >/dev/null 2>&1
 logger -p local6.notice -t installer "app-intrusion-prevention-core - disabling intrusion prevention server"
 chkconfig snortsam off >/dev/null 2>&1
 
+snortsam-state --delete all >/dev/null 2>&1
+service firewall restart >/dev/null 2>&1

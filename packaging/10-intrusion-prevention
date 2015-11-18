@@ -5,6 +5,7 @@ IPS=`snortsam-state -qd, 2>/dev/null | awk -F, '$6+$7 > ENVIRON["UTC"] { print $
 for INTERFACE in $EXTIF; do
     for IP in $IPS; do
         /sbin/iptables -I INPUT -i $INTERFACE -s $IP -j DROP
+        /sbin/iptables -I INPUT -i $INTERFACE -d $IP -j DROP
         /sbin/iptables -I OUTPUT -o $INTERFACE -d $IP -j DROP 
         /sbin/iptables -I FORWARD -i $INTERFACE -s $IP -j DROP
         /sbin/iptables -I FORWARD -o $INTERFACE -d $IP -j DROP

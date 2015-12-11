@@ -22,6 +22,6 @@ $configlet = array(
 	'title' => lang('intrusion_prevention_app_name'),
 	'package' => 'snort',
 	'process_name' => 'snortsam',
-	'reloadable' => TRUE,
+	'reloadable' => FALSE,
 	'url' => '/app/intrusion_prevention'
 );

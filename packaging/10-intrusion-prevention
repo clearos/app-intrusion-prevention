@@ -1,15 +1,15 @@
-[ -e /etc/clearos/network.conf ] && source /etc/clearos/network.conf
+if [ "$FW_PROTO" == "ipv4" ]; then
+    [ -e /etc/clearos/network.conf ] && source /etc/clearos/network.conf
 
-export UTC=`date +"%s"`
-IPS=`snortsam-state -qd, 2>/dev/null | awk -F, '$6+$7 > ENVIRON["UTC"] { print $2 }'`
-for INTERFACE in $EXTIF; do
-    for IP in $IPS; do
-        $IPTABLES -I INPUT -i $INTERFACE -s $IP -j DROP
-        $IPTABLES -I INPUT -i $INTERFACE -d $IP -j DROP
-        $IPTABLES -I OUTPUT -o $INTERFACE -d $IP -j DROP
-        $IPTABLES -I FORWARD -i $INTERFACE -s $IP -j DROP
-        $IPTABLES -I FORWARD -o $INTERFACE -d $IP -j DROP
+    export UTC=`date +"%s"`
+    IPS=`snortsam-state -qd, 2>/dev/null | awk -F, '$6+$7 > ENVIRON["UTC"] { print $2 }'`
+    for INTERFACE in $EXTIF; do
+        for IP in $IPS; do
+            $IPTABLES -I INPUT -i $INTERFACE -s $IP -j DROP
+            $IPTABLES -I INPUT -i $INTERFACE -d $IP -j DROP
+            $IPTABLES -I OUTPUT -o $INTERFACE -d $IP -j DROP
+            $IPTABLES -I FORWARD -i $INTERFACE -s $IP -j DROP
+            $IPTABLES -I FORWARD -o $INTERFACE -d $IP -j DROP
+        done
     done
-done
-
-
+fi

@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 2.2.2
+Version: 2.2.3
 Release: 1%{dist}
 Summary: Intrusion Prevention System
 License: GPLv3
@@ -24,6 +24,7 @@ Requires: app-base-core
 Requires: app-network-core >= 1:1.4.70
 Requires: app-intrusion-detection-core
 Requires: snort >= 2.9.0.4
+Requires: app-firewall-core >= 2.2.11
 
 %description core
 The Intrusion Prevention System actively monitors network traffic and blocks unwanted traffic before it can harm your network.
@@ -40,7 +41,6 @@ cp -r * %{buildroot}/usr/clearos/apps/intrusion_prevention/
 
 install -d -m 0755 %{buildroot}/var/clearos/intrusion_prevention
 install -d -m 0755 %{buildroot}/var/clearos/intrusion_prevention/backup
-install -D -m 0755 packaging/10-intrusion-prevention %{buildroot}/etc/clearos/firewall.d/10-intrusion-prevention
 install -D -m 0644 packaging/intrusion_prevention.conf %{buildroot}/etc/clearos/intrusion_prevention.conf
 install -D -m 0755 packaging/network-configuration-event %{buildroot}/var/clearos/events/network_configuration/intrusion_prevention
 install -D -m 0644 packaging/snortsam.php %{buildroot}/var/clearos/base/daemon/snortsam.php
@@ -88,7 +88,6 @@ exit 0
 /usr/clearos/apps/intrusion_prevention/deploy
 /usr/clearos/apps/intrusion_prevention/language
 /usr/clearos/apps/intrusion_prevention/libraries
-/etc/clearos/firewall.d/10-intrusion-prevention
 %config(noreplace) /etc/clearos/intrusion_prevention.conf
 /var/clearos/events/network_configuration/intrusion_prevention
 /var/clearos/base/daemon/snortsam.php

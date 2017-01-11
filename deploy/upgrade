@@ -29,9 +29,10 @@ if [ -e /etc/snortsam.conf ]; then
         logger -p local6.notice -t installer "app-intrusion-prevention-core - adding hook to intrusion detection system"
         sed -i -e "s/bindip 127.0.0.1/bindip 127.0.0.1\n\niptables eth0 syslog.info/" /etc/snortsam.conf
 
-        # Trigger event to update the eth0 default to WAN interface(s)
-        /var/clearos/events/network_configuration/intrusion_prevention 2>&1
     fi
 fi
+
+# Trigger event to update the eth0 default to WAN interface(s)
+/var/clearos/events/network_configuration/intrusion_prevention 2>&1
 
 exit 0

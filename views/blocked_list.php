@@ -59,6 +59,8 @@ $anchors = array();
 
 $items = array();
 
+date_default_timezone_set($timezone);
+
 foreach ($blocked as $id => $details) {
 
     $ip = $details['blocked_ip'];
@@ -72,7 +74,8 @@ foreach ($blocked as $id => $details) {
 
     $detail_buttons = button_set(
         array(
-            anchor_custom('/app/intrusion_prevention/blocked_list/exempt/' . $ip, lang('intrusion_prevention_white_list'), 'high'),
+            anchor_custom('/app/intrusion_prevention/blocked_list/exempt/' . $ip,
+                lang('intrusion_prevention_white_list'), 'high'),
             anchor_delete('/app/intrusion_prevention/blocked_list/delete/' . $ip)
         )
     );
@@ -98,6 +101,9 @@ foreach ($blocked as $id => $details) {
 ///////////////////////////////////////////////////////////////////////////////
 
 $options['default_rows'] = 50;
+$options['sort'] = TRUE;
+$options['sort-default-col'] = 2;
+$options['sort-default-dir'] = 'desc';
 
 echo summary_table(
     lang('intrusion_prevention_blocked_list'),
@@ -106,3 +112,5 @@ echo summary_table(
     $items,
     $options
 );
+
+// vi: expandtab shiftwidth=4 softtabstop=4 tabstop=4

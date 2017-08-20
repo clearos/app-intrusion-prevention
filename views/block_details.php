@@ -65,6 +65,11 @@ foreach ($details['ref'] as $ref) {
         '<a href="%s" target="_blank">%s</a></div>', $ref, $ref));
     echo field_banner('&nbsp;');
 }
+if ($refid != 1) {
+    echo field_banner(sprintf('<div>%s</div>',
+        lang('intrusion_prevention_reference_warning')));
+    echo field_banner('&nbsp;');
+}
 
 echo field_button_set(
     array(

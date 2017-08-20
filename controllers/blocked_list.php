@@ -59,12 +59,14 @@ class Blocked_List extends ClearOS_Controller
         //---------------
 
         $this->load->library('intrusion_prevention/SnortSam');
+        $this->load->library('php/PHP');
         $this->lang->load('intrusion_prevention');
 
         // Load view data
         //---------------
 
         try {
+            $data['timezone'] = $this->php->get_detected_timezone();
             $data['blocked'] =  $this->snortsam->get_block_list();
         } catch (Exception $e) {
             $this->page->view_exception($e);
@@ -74,7 +76,8 @@ class Blocked_List extends ClearOS_Controller
         // Load views
         //-----------
 
-        $this->page->view_form('blocked_list', $data, lang('intrusion_prevention_blocked_list'));
+        $this->page->view_form('blocked_list',
+            $data, lang('intrusion_prevention_blocked_list'));
     }
 
     /**
@@ -162,3 +165,5 @@ class Blocked_List extends ClearOS_Controller
         }
     }
 }
+
+// vi: expandtab shiftwidth=4 softtabstop=4 tabstop=4

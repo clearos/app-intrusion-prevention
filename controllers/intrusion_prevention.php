@@ -71,4 +71,42 @@ class Intrusion_Prevention extends ClearOS_Controller
 
         $this->page->view_forms($views, lang('intrusion_prevention_app_name'));
     }
+
+    /**
+     * Block details controller
+     *
+     * @return view
+     */
+
+    function block_details($ipsid)
+    {
+        // Load libraries
+        //---------------
+
+        $this->load->library('intrusion_detection/Snort');
+        $this->load->library('intrusion_prevention/SnortSam');
+        $this->lang->load('intrusion_prevention');
+        $this->lang->load('intrusion_detection');
+
+        // Load view data
+        //---------------
+
+        list($sid, $ip) = explode(':', $ipsid, 2);
+
+        try {
+            $data['ip'] = $ip;
+            $data['details'] = $this->snort->get_rule_details($sid);
+        } catch (Exception $e) {
+            $this->page->view_exception($e);
+            return;
+        }
+
+        // Load views
+        //-----------
+
+        $this->page->view_form('block_details',
+            $data, lang('intrusion_prevention_details'));
+    }
 }
+
+// vi: expandtab shiftwidth=4 softtabstop=4 tabstop=4

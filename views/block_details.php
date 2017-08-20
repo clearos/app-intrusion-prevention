@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Intrusion prevention blocked list.
+ * Intrusion prevention block details view.
  *
  * @category   apps
  * @package    intrusion-prevention
@@ -37,72 +37,49 @@ $this->lang->load('intrusion_prevention');
 $this->lang->load('network');
 
 ///////////////////////////////////////////////////////////////////////////////
-// Headers
+// Form open
 ///////////////////////////////////////////////////////////////////////////////
 
-$headers = array(
-    lang('network_ip'),
-    lang('intrusion_prevention_security_id'),
-    lang('intrusion_prevention_block_time'),
-);
+echo form_open('/intrusion_prevention');
+echo form_header(lang('intrusion_prevention_details'));
 
 ///////////////////////////////////////////////////////////////////////////////
-// Anchors
+// Form fields
 ///////////////////////////////////////////////////////////////////////////////
 
-// TODO: add delete all button / action
-$anchors = array();
+echo field_banner("<h3><b>{$details['desc']}</b></h3>");
 
-///////////////////////////////////////////////////////////////////////////////
-// Items
-///////////////////////////////////////////////////////////////////////////////
+echo field_banner(sprintf('<div>%s: <strong>%s</strong></div>',
+    lang('intrusion_prevention_source_address'), $ip));
+echo field_banner(sprintf('<div>%s: %sr%s (%s)</div>',
+    lang('intrusion_prevention_security_id'), $details['sid'],
+    $details['rev'], $details['classtype']));
 
-$items = array();
+echo field_banner('&nbsp;');
 
-foreach ($blocked as $id => $details) {
-
-    $ip = $details['blocked_ip'];
-    $order_ip = "<span style='display: none'>" . sprintf("%032b", ip2long($ip)) . "</span>$ip";
-    $sid = $details['sid'];
-    $timestamp = strftime("%c", $details['timestamp']);
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Item buttons
-    ///////////////////////////////////////////////////////////////////////////
-
-    $detail_buttons = button_set(
-        array(
-            anchor_custom('/app/intrusion_prevention/blocked_list/exempt/' . $ip, lang('intrusion_prevention_white_list'), 'high'),
-            anchor_delete('/app/intrusion_prevention/blocked_list/delete/' . $ip)
-        )
-    );
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Item details
-    ///////////////////////////////////////////////////////////////////////////
-
-    $item['title'] = $ip;
-    $item['action'] = '/app/intrusion_prevention/blocked_list/delete/' . $ip;
-    $item['anchors'] = $detail_buttons;
-    $item['details'] = array(
-        $order_ip,
-        anchor_custom("/app/intrusion_prevention/block_details/$sid:$ip", $sid),
-        $timestamp,
-    );
-
-    $items[] = $item;
+$refid = 1;
+foreach ($details['ref'] as $ref) {
+    echo field_banner(sprintf('Reference %d:', $refid++));
+    echo field_banner(sprintf(
+        '<div style="padding-left: 8px">' .
+        '<a href="%s" target="_blank">%s</a></div>', $ref, $ref));
+    echo field_banner('&nbsp;');
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Summary table
-///////////////////////////////////////////////////////////////////////////////
-
-$options['default_rows'] = 50;
-
-echo summary_table(
-    lang('intrusion_prevention_blocked_list'),
-    $anchors,
-    $headers,
-    $items,
-    $options
+echo field_button_set(
+    array(
+        anchor_custom('/app/intrusion_prevention/blocked_list/exempt/' . $ip,
+            lang('intrusion_prevention_white_list'), 'high'),
+        anchor_delete('/app/intrusion_prevention/blocked_list/delete/' . $ip),
+        anchor_cancel('/app/intrusion_prevention')
+    )
 );
+
+///////////////////////////////////////////////////////////////////////////////
+// Form close
+///////////////////////////////////////////////////////////////////////////////
+
+echo form_footer();
+echo form_close();
+
+// vi: expandtab shiftwidth=4 softtabstop=4 tabstop=4

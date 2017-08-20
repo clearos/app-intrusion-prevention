@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 2.3.0
+Version: 2.3.1
 Release: 1%{dist}
 Summary: Intrusion Prevention System
 License: GPLv3
@@ -10,7 +10,7 @@ Source: %{name}-%{version}.tar.gz
 Buildarch: noarch
 Requires: %{name}-core = 1:%{version}-%{release}
 Requires: app-base
-Requires: app-intrusion-detection
+Requires: app-intrusion-detection >= 2.1.7
 Requires: app-network
 
 %description
@@ -22,7 +22,7 @@ License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
 Requires: app-network-core >= 1:1.4.70
-Requires: app-intrusion-detection-core
+Requires: app-intrusion-detection-core >= 2.1.7
 Requires: snort >= 2.9.0.4
 Requires: app-firewall-core >= 2.2.11
 
@@ -82,6 +82,7 @@ exit 0
 %files core
 %defattr(-,root,root)
 %exclude /usr/clearos/apps/intrusion_prevention/packaging
+%exclude /usr/clearos/apps/intrusion_prevention/unify.json
 %dir /usr/clearos/apps/intrusion_prevention
 %dir /var/clearos/intrusion_prevention
 %dir /var/clearos/intrusion_prevention/backup

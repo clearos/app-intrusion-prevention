@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'intrusion_prevention';
-$app['version'] = '2.3.0';
+$app['version'] = '2.3.1';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -33,13 +33,13 @@ $app['controllers']['white_list']['title'] = lang('intrusion_prevention_white_li
 /////////////////////////////////////////////////////////////////////////////
 
 $app['requires'] = array(
-    'app-intrusion-detection',
+    'app-intrusion-detection >= 2.1.7',
     'app-network',
 );
 
 $app['core_requires'] = array(
     'app-network-core >= 1:1.4.70',
-    'app-intrusion-detection-core',
+    'app-intrusion-detection-core >= 2.1.7',
     'snort >= 2.9.0.4',
     'app-firewall-core >= 2.2.11',
 );

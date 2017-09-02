@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'intrusion_prevention';
-$app['version'] = '2.3.4';
+$app['version'] = '2.4.0';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -40,7 +40,7 @@ $app['requires'] = array(
 $app['core_requires'] = array(
     'app-network-core >= 1:1.4.70',
     'app-intrusion-detection-core >= 2.1.7',
-    'snort >= 2.9.0.4',
+    'snort >= 2.9.6.2-8',
     'app-firewall-core >= 2.2.11',
 );
 
@@ -50,10 +50,6 @@ $app['core_file_manifest'] = array(
         'target' => '/etc/clearos/intrusion_prevention.conf',
         'config' => TRUE,
         'config_params' => 'noreplace',
-    ),
-    'network-configuration-event'=> array(
-        'target' => '/var/clearos/events/network_configuration/intrusion_prevention',
-        'mode' => '0755'
     ),
     'webconfig-whitelist.conf' => array(
         'target' => '/etc/snortsam.d/webconfig-whitelist.conf',

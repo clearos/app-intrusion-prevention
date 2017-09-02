@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 2.3.4
+Version: 2.4.0
 Release: 1%{dist}
 Summary: Intrusion Prevention System
 License: GPLv3
@@ -23,7 +23,7 @@ Group: ClearOS/Libraries
 Requires: app-base-core
 Requires: app-network-core >= 1:1.4.70
 Requires: app-intrusion-detection-core >= 2.1.7
-Requires: snort >= 2.9.0.4
+Requires: snort >= 2.9.6.2-8
 Requires: app-firewall-core >= 2.2.11
 
 %description core
@@ -42,7 +42,6 @@ cp -r * %{buildroot}/usr/clearos/apps/intrusion_prevention/
 install -d -m 0755 %{buildroot}/var/clearos/intrusion_prevention
 install -d -m 0755 %{buildroot}/var/clearos/intrusion_prevention/backup
 install -D -m 0644 packaging/intrusion_prevention.conf %{buildroot}/etc/clearos/intrusion_prevention.conf
-install -D -m 0755 packaging/network-configuration-event %{buildroot}/var/clearos/events/network_configuration/intrusion_prevention
 install -D -m 0644 packaging/snortsam.php %{buildroot}/var/clearos/base/daemon/snortsam.php
 install -D -m 0644 packaging/webconfig-whitelist.conf %{buildroot}/etc/snortsam.d/webconfig-whitelist.conf
 
@@ -90,6 +89,5 @@ exit 0
 /usr/clearos/apps/intrusion_prevention/language
 /usr/clearos/apps/intrusion_prevention/libraries
 %config(noreplace) /etc/clearos/intrusion_prevention.conf
-/var/clearos/events/network_configuration/intrusion_prevention
 /var/clearos/base/daemon/snortsam.php
 %config(noreplace) /etc/snortsam.d/webconfig-whitelist.conf

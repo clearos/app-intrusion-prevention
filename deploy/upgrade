@@ -20,19 +20,25 @@ output alert_fwsam: 127.0.0.1/" /etc/snort.conf
     fi
 fi
 
-# Add iptables parameter if missing (tracker #6741)
-#--------------------------------------------------
+# Remove iptables parameter, now using ipset
+#-------------------------------------------
 
 if [ -e /etc/snortsam.conf ]; then
     CHECK=`grep "^iptables[[:space:]]*" /etc/snortsam.conf`
-    if [ -z "$CHECK" ]; then
-        logger -p local6.notice -t installer "app-intrusion-prevention-core - adding hook to intrusion detection system"
-        sed -i -e "s/bindip 127.0.0.1/bindip 127.0.0.1\n\niptables eth0 syslog.info/" /etc/snortsam.conf
+    if [ -n "$CHECK" ]; then
+        logger -p local6.notice -t installer "app-intrusion-prevention-core - removing iptables hook"
+        sed -i -e "s/^iptables.*/# iptables eth0 syslog.info/" /etc/snortsam.conf
+    fi
 
+    CHECK=`grep "^ipset" /etc/snortsam.conf`
+    if [ -z "$CHECK" ]; then
+        logger -p local6.notice -t installer "app-intrusion-prevention-core - adding ipset hook"
+        sed -i -e "s/^bindip[[:space:]]*\(.*\)/bindip \1\n\n\
+# IPset plugin\n\
+ipset/" /etc/snortsam.conf
+
+        /sbin/service snortsam condrestart >/dev/null 2>&1
     fi
 fi
-
-# Trigger event to update the eth0 default to WAN interface(s)
-/var/clearos/events/network_configuration/intrusion_prevention 2>&1
 
 exit 0

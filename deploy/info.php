@@ -39,9 +39,9 @@ $app['requires'] = array(
 
 $app['core_requires'] = array(
     'app-network-core >= 1:1.4.70',
-    'app-intrusion-detection-core >= 2.1.7',
+    'app-intrusion-detection-core >= 1:2.1.7',
     'snort >= 2.9.6.2-8',
-    'app-firewall-core >= 2.2.11',
+    'app-firewall-core >= 1:2.4.0',
 );
 
 $app['core_file_manifest'] = array(

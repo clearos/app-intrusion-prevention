@@ -22,9 +22,9 @@ License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
 Requires: app-network-core >= 1:1.4.70
-Requires: app-intrusion-detection-core >= 2.1.7
+Requires: app-intrusion-detection-core >= 1:2.1.7
 Requires: snort >= 2.9.6.2-8
-Requires: app-firewall-core >= 2.2.11
+Requires: app-firewall-core >= 1:2.4.0
 
 %description core
 The Intrusion Prevention System actively monitors network traffic and blocks unwanted traffic before it can harm your network.

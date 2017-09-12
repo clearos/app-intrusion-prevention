@@ -1,7 +1,7 @@
 
 Name: app-intrusion-prevention
 Epoch: 1
-Version: 2.4.1
+Version: 2.4.2
 Release: 1%{dist}
 Summary: Intrusion Prevention System
 License: GPLv3
@@ -21,6 +21,7 @@ Summary: Intrusion Prevention System - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
+Requires: app-date-core
 Requires: app-network-core >= 1:1.4.70
 Requires: app-intrusion-detection-core >= 1:2.1.7
 Requires: snort >= 2.9.6.2-8

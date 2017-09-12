@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'intrusion_prevention';
-$app['version'] = '2.4.1';
+$app['version'] = '2.4.2';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -38,6 +38,7 @@ $app['requires'] = array(
 );
 
 $app['core_requires'] = array(
+    'app-date-core',
     'app-network-core >= 1:1.4.70',
     'app-intrusion-detection-core >= 1:2.1.7',
     'snort >= 2.9.6.2-8',

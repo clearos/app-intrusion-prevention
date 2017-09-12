@@ -59,14 +59,14 @@ class Blocked_List extends ClearOS_Controller
         //---------------
 
         $this->load->library('intrusion_prevention/SnortSam');
-        $this->load->library('php/PHP');
+        $this->load->library('date/Time');
         $this->lang->load('intrusion_prevention');
 
         // Load view data
         //---------------
 
         try {
-            $data['timezone'] = $this->php->get_detected_timezone();
+            $data['timezone'] = $this->time->get_time_zone();
             $data['blocked'] =  $this->snortsam->get_block_list();
         } catch (Exception $e) {
             $this->page->view_exception($e);

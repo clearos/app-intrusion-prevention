@@ -37,6 +37,9 @@ if [ -e /etc/snortsam.conf ]; then
 # IPset plugin\n\
 ipset/" /etc/snortsam.conf
 
+        systemctl daemon-reload  >/dev/null 2>&1
+        /sbin/service firewall restart >/dev/null 2>&1
+        sleep 2
         /sbin/service snortsam condrestart >/dev/null 2>&1
     fi
 fi

@@ -44,6 +44,14 @@ ipset/" /etc/snortsam.conf
     fi
 fi
 
+# Remove old firewall configlet
+#------------------------------
+
+if [ -e /etc/clearos/firewall.d/10-intrusion-prevention ]; then
+    logger -p local6.notice -t installer "app-intrusion-prevention-core - removing old firewall configlet"
+    rm -f  /etc/clearos/firewall.d/10-intrusion-prevention
+fi
+
 # Restart firewall due to ipset migration
 #----------------------------------------
 
